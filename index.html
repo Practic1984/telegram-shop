@@ -21,12 +21,15 @@
             user ? `Привет, ${user.first_name}!` : 'Привет, гость!';
 
         // Кнопка отправки данных
-        document.getElementById('send-data').onclick = function() {
-            let data = {
-                action: 'test',
-                message: 'Привет от WebApp!'
+        document.getElementById('checkout').onclick = function() {
+            let tg = window.Telegram.WebApp;
+            let order = {
+                user: tg.initDataUnsafe?.user,
+                cart: cart,
+                total: document.getElementById('total').innerText,
+                initData: tg.initData   // ← добавили строку initData
             };
-            tg.sendData(JSON.stringify(data));
+            tg.sendData(JSON.stringify(order));
             tg.close();
         };
     </script>
