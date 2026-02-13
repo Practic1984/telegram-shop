@@ -9,27 +9,34 @@
 <body>
     <h1>Интернет-магазин</h1>
     <p id="user-info">Загрузка...</p>
-    <button id="send-data">Отправить данные боту</button>
+    
+    <!-- Кнопка для отправки данных боту -->
+    <button id="send-data">📨 Отправить данные боту</button>
 
     <script>
+        // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
-        tg.expand(); // развернуть на весь экран
+        tg.expand();
 
-        // Получаем информацию о пользователе
+        // Приветствие пользователя
         let user = tg.initDataUnsafe?.user;
         document.getElementById('user-info').innerText = 
             user ? `Привет, ${user.first_name}!` : 'Привет, гость!';
 
-        // Кнопка отправки данных
-        document.getElementById('checkout').onclick = function() {
-            let tg = window.Telegram.WebApp;
-            let order = {
-                user: tg.initDataUnsafe?.user,
-                cart: cart,
-                total: document.getElementById('total').innerText,
-                initData: tg.initData   // ← добавили строку initData
+        // ОБРАБОТЧИК КНОПКИ — правильный ID!
+        document.getElementById('send-data').onclick = function() {
+            // Формируем тестовые данные
+            let testData = {
+                action: 'test',
+                message: 'Кнопка нажата!',
+                user_id: user?.id,
+                username: user?.username
             };
-            tg.sendData(JSON.stringify(order));
+            
+            // Отправляем боту
+            tg.sendData(JSON.stringify(testData));
+            
+            // Закрываем WebApp
             tg.close();
         };
     </script>
